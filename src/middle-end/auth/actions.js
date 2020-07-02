@@ -15,15 +15,16 @@ exports.createAccount = MiddleEnd.createAction(CREATE_ACCOUNT, {
 
 exports.login = MiddleEnd.createAction(LOGIN, {
     index: true,
-    handler: async ({ email, password, token }) => {
+    handler: async ({ username, password, token }) => {
 
         // See if the user has a token
         if (token) {
-            // Check if the token is valid by hitting /user
-            const { data: results } = await WebClient.get('/user', {
+            // Check if the token is valid by hitting /validate
+            const { data: results } = await WebClient.get('/validate', {
                 headers: WebClient.getAuth({ token })
             });
-            return { token, user: results };
+
+            return { token, user: results.data };
         }
         else if (typeof token !== 'undefined') {
             const error = new Error('No login token on init');
@@ -32,8 +33,9 @@ exports.login = MiddleEnd.createAction(LOGIN, {
         }
 
         // If there's no token, log in with a payload
-        const { data: results } = await WebClient.post('/login', { email, password });
-        return results;
+        const { data: results } = await WebClient.post('/login', { username, password });
+
+        return { token: results.data.accessToken };
     },
     after: ({ result }) => {
 

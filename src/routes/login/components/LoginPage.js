@@ -18,7 +18,7 @@ module.exports = class LoginPage extends StrangeForms(React.Component) {
     };
 
     static fields = {
-        email: '',
+        username: '',
         password: ''
     };
 
@@ -27,7 +27,7 @@ module.exports = class LoginPage extends StrangeForms(React.Component) {
         super(props);
 
         this.state = {
-            email: '',
+            username: '',
             password: '',
             isSubmitting: false
         };
@@ -41,7 +41,7 @@ module.exports = class LoginPage extends StrangeForms(React.Component) {
 
     disableSubmit() {
 
-        return !this.fieldValue('password') || !this.fieldValue('email');
+        return !this.fieldValue('password') || !this.fieldValue('username');
     }
 
     handleSubmit = async (ev) => {
@@ -59,7 +59,7 @@ module.exports = class LoginPage extends StrangeForms(React.Component) {
     formatFields = () => {
 
         return {
-            email: this.fieldValue('email'),
+            username: this.fieldValue('username'),
             password: this.fieldValue('password')
         };
     };
@@ -75,10 +75,10 @@ module.exports = class LoginPage extends StrangeForms(React.Component) {
                 <StyledForm onSubmit={this.handleSubmit}>
                     <TextField
                         required
-                        type='email'
+                        type='username'
                         label='Email'
-                        value={this.fieldValue('email')}
-                        onChange={this.proposeNew('email')}
+                        value={this.fieldValue('username')}
+                        onChange={this.proposeNew('username')}
                     />
                     <TextField
                         required
